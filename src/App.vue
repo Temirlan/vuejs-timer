@@ -1,26 +1,91 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <h1>Timer</h1>
+  <CreateTimerForm @add-timer="addTimer" msg="Welcome to Your Vue.js App" />
+  <component
+    v-for="timer in timers"
+    :key="timer.key"
+    :is="timer.component"
+    :time="timer.time"
+    v-bind="{ name: `Timer № ${timer.key}` }"
+  />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CreateTimerForm from './components/CreateTimerForm.vue';
+import Timer from './components/Timer.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    CreateTimerForm,
+  },
+  data: function() {
+    return {
+      timers: [],
+    };
+  },
+  methods: {
+    addTimer(payload) {
+      this.timers.unshift({
+        component: Timer,
+        time: +payload.secondes * 1000 + +payload.milliseconds,
+        key: this.timers.length + 1,
+      });
+    },
+  },
+};
 </script>
 
 <style>
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+}
+#app {
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+input[type='number'] {
+  padding: 10px;
+  font-size: inherit;
+  width: 100%;
+}
+
+button {
+  padding: 10px;
+}
+
+[v-cloak] {
+  opacity: 0;
+}
+
+label {
+  width: 20%;
+  padding: 10px 0;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.timer {
+  font-size: 2em;
+  margin: 20px;
 }
 </style>
