@@ -3,7 +3,7 @@
 ## Jsfiddle
 
 ```
-[jsfiddle](https://jsfiddle.net/g85zxbm6/237/)
+https://jsfiddle.net/g85zxbm6/237/
 ```
 
 ## Project setup
